@@ -58,16 +58,22 @@ server.get( "/", function(req, res) {
         console.log( 'result' )
         console.log( result )
 
+        const element = document.querySelector( '.donors' );
+
         result.forEach( e => {
-            console.log('test')
-            console.log( e )
-            console.log( e['name'] )
-            console.log( e['email'] )
-            console.log( e['blood'] )
+
+            element.innerHTML += `<div class= "donor">
+            <div class= "blood"> ${e.blood} </div> 
+            <p>${e.name}</p>
+            </div>`
+
         });
 
-        const donors = result
-        return res.render("index.html", { donors })
+
+
+        // const donors = result
+        // return res.render("index.html", { donors })
+        return res.render("index.html")
     })
 
     donors = []
