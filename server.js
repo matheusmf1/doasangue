@@ -54,7 +54,7 @@ server.post("/", (req, res) => {
         res.send("Todos os campos são obrigatórios.")
     }
 
-    connection.query( `INSERT INTO donors ( name, email, blood ) VALUES (${name}, ${email}, ${blood});`, (err, res ) => {
+    connection.query( `INSERT INTO donors ( name, email, blood ) VALUES (${name}, ${email}, ${blood});`, (err, result ) => {
 
         if (err) return res.send( `Erro no Banco de dados: ${err}`)
 
