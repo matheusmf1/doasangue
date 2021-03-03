@@ -37,7 +37,8 @@ const connection = mysql.createConnection({
   host     : 'myrdsdemo.czs5dtq7qb7g.us-east-1.rds.amazonaws.com',
   user     : 'admin',
   password : 'admin1234',
-  port     : 3306
+  port     : 3306,
+  database: 'doasangue'
 });
 
 connection.connect(function(err) {
