@@ -1,29 +1,8 @@
-var winston = require('winston');
-
 const mysql = require('mysql');
-
-// var logger = new (winston.createLogger)({
-//   transports: [
-//     new winston.transports.Console(),
-//     new winston.transports.File({ filename: './all-logs.log' }),
-//   ],
-//   exceptionHandlers: [
-//     new winston.transports.File({ filename: './exceptions.log' })
-//   ]
-// });
 
 const express = require("express")
 const server = express()
 const nunjucks = require("nunjucks")
-const Pool = require('pg').Pool
-
-const db = new Pool({
-    user: 'admin',
-    password: 'admin1234',
-    host: 'myrdsdemo.czs5dtq7qb7g.us-east-1.rds.amazonaws.com',
-    port: 3306,
-    database: 'doasangue'
-})
 
 server.use(express.static('public'))
 server.use(express.urlencoded({extended: true}))
@@ -75,9 +54,9 @@ server.post("/", (req, res) => {
         res.send("Todos os campos são obrigatórios.")
     }
 
-    connection.query( `INSERT INTO donors ( name, email, blood) VALUES ( ${name}, ${email}, ${blood})`, function(err, ) {
+    connection.query( `INSERT INTO donors ( name, email, blood ) VALUES (${name}, ${email}, ${blood});`, (err, res ) => {
 
-        if (err) return res.send("Erro no Banco de dados")
+        if (err) return res.send("Erro no Banco de dados: " + err)
 
         return res.redirect("/")
 
