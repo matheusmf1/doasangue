@@ -56,12 +56,13 @@ server.get( "/", function(req, res) {
         if (err) return res.send("Erro de banco de dados parte 1: " + err );
 
         console.log( 'result' )
-        console.log( result[0] )
+        console.log( result )
 
-        console.log( typeof result )
-
-
-        
+        result.forEach( e => {
+            console.log('test')
+            console.log( e )
+            console.log( e['RowDataPacket'] )
+        });
 
         const donors = result.rows;
         return res.render("index.html", { donors })
