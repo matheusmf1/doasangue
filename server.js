@@ -32,7 +32,7 @@ nunjucks.configure("./", {
 })
 
 server.get( '/create', ( req, res ) => {
-    
+
     db.query( `CREATE TABLE IF NOT EXISTS donors(
         ID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(45),
@@ -40,13 +40,12 @@ server.get( '/create', ( req, res ) => {
         blood VARCHAR(45)
     )`,
     (err, result) => {
-
-        if (err) return res.send("Erro de banco de dados parte 1");
+        // if (err) return res.send("Erro de banco de dados parte 1");
         console.log('result: ' + result)
 
         logger.warn('Banco de dados error'); 
-        // const donors = result.rows;
-        return res.render("index.html", {})
+        const donors = result.rows;
+        return res.render("index.html")
     })
 })
 
