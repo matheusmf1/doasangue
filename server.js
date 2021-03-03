@@ -1,19 +1,22 @@
 var winston = require('winston');
 
+const mysql = require('mysql');
 
-var logger = new (winston.createLogger)({
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: './all-logs.log' }),
-  ],
-  exceptionHandlers: [
-    new winston.transports.File({ filename: './exceptions.log' })
-  ]
-});
+// var logger = new (winston.createLogger)({
+//   transports: [
+//     new winston.transports.Console(),
+//     new winston.transports.File({ filename: './all-logs.log' }),
+//   ],
+//   exceptionHandlers: [
+//     new winston.transports.File({ filename: './exceptions.log' })
+//   ]
+// });
+
 const express = require("express")
 const server = express()
 const nunjucks = require("nunjucks")
 const Pool = require('pg').Pool
+
 const db = new Pool({
     user: 'admin',
     password: 'admin1234',
@@ -25,22 +28,50 @@ const db = new Pool({
 server.use(express.static('public'))
 server.use(express.urlencoded({extended: true}))
 
-
 nunjucks.configure("./", {
     express: server,
     noCache: true
 })
 
-server.get("/", function(req, res) {
-    db.query("SELECT * FROM donors", function(err, result){
-        if (err) return res.send("Erro de banco de dados parte 1");
+const connection = mysql.createConnection({
+  host     : 'myrdsdemo.czs5dtq7qb7g.us-east-1.rds.amazonaws.com',
+  user     : 'admin',
+  password : 'admin1234',
+  port     : 3306
+});
 
-        logger.warn('Banco de dados error'); 
+connection.connect(function(err) {
+  if (err) {
+    console.error('Database connection failed: ' + err.stack);
+    return;
+  }
+
+  console.log('Connected to database.');
+});
+
+server.get( "/", function(req, res) {
+
+
+    connection.query( "SELECT * FROM donors", (err, result) => {
+        if (err) return res.send("Erro de banco de dados parte 1: " + err );
+
         const donors = result.rows;
         return res.render("index.html", { donors })
     })
 
     donors = []
+
+
+
+    // db.query("SELECT * FROM donors", function(err, result){
+    //     if (err) return res.send("Erro de banco de dados parte 1");
+
+    //     // logger.warn('Banco de dados error'); 
+    //     const donors = result.rows;
+    //     return res.render("index.html", { donors })
+    // })
+
+    // donors = []
 
     // res.render("index.html", { })
     
@@ -53,7 +84,7 @@ server.post("/", function(req, res){
     const blood = req.body.blood
 
     if (name == "" || email == "" || blood == ""){
-	logger.warn('Todos os campos sao obrigatorios');    
+	// logger.warn('Todos os campos sao obrigatorios');    
         res.send("Todos os campos são obrigatórios.")
     }
 
