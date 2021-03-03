@@ -58,7 +58,7 @@ server.get( "/", function(req, res) {
         console.log( 'result' )
         console.log( result )
 
-        const element = document.querySelector( '.donors' );
+        // const element = document.querySelector( '.donors' );
 
         const donors = []
 
