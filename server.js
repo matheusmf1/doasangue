@@ -61,10 +61,12 @@ server.get( "/", function(req, res) {
         result.forEach( e => {
             console.log('test')
             console.log( e )
-            console.log( e['RowDataPacket'] )
+            console.log( e['name'] )
+            console.log( e['email'] )
+            console.log( e['blood'] )
         });
 
-        const donors = result.rows;
+        const donors = result
         return res.render("index.html", { donors })
     })
 
