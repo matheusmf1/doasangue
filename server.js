@@ -52,9 +52,14 @@ connection.connect(function(err) {
 
 server.get( "/", function(req, res) {
 
-
     connection.query( "SELECT * FROM donors", (err, result) => {
         if (err) return res.send("Erro de banco de dados parte 1: " + err );
+
+        console.log( 'result' )
+        console.log( result )
+
+        console.log( typeof result )
+        
 
         const donors = result.rows;
         return res.render("index.html", { donors })
@@ -64,17 +69,17 @@ server.get( "/", function(req, res) {
 
 
 
-    // db.query("SELECT * FROM donors", function(err, result){
-    //     if (err) return res.send("Erro de banco de dados parte 1");
+    db.query("SELECT * FROM donors", function(err, result){
+        if (err) return res.send("Erro de banco de dados parte 1");
 
-    //     // logger.warn('Banco de dados error'); 
-    //     const donors = result.rows;
-    //     return res.render("index.html", { donors })
-    // })
+        // logger.warn('Banco de dados error'); 
+        const donors = result.rows;
+        return res.render("index.html", { donors })
+    })
 
-    // donors = []
+    donors = []
 
-    // res.render("index.html", { })
+    res.render("index.html", { })
     
 })
 
