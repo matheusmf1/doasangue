@@ -50,51 +50,21 @@ connection.connect(function(err) {
   console.log('Connected to database.');
 });
 
-server.get( "/", function(req, res) {
+server.get( "/", (req, res) => {
 
     connection.query( "SELECT * FROM donors", (err, result) => {
         if (err) return res.send("Erro de banco de dados parte 1: " + err );
 
-        console.log( 'result' )
-        console.log( result )
-
-        // const element = document.querySelector( '.donors' );
-
         const donors = []
 
-        result.forEach( e => {
-
-            donors.push( e )
-
-            // element.innerHTML += `<div class= "donor">
-            // <div class= "blood"> ${e.blood} </div> 
-            // <p>${e.name}</p>
-            // </div>`
-
-        });
+        result.forEach( e => donors.push( e ) );
 
         return res.render("index.html", { donors })
     })
-
-    // donors = []
-
-
-
-    // db.query("SELECT * FROM donors", function(err, result){
-    //     if (err) return res.send("Erro de banco de dados parte 1");
-
-    //     // logger.warn('Banco de dados error'); 
-    //     const donors = result.rows;
-    //     return res.render("index.html", { donors })
-    // })
-
-    // donors = []
-
-    // res.render("index.html", { })
     
 })
 
-server.post("/", function(req, res){
+server.post("/", (req, res) => {
     // pegar dados do formulário // 
     const name = req.body.name
     const email = req.body.email
@@ -109,7 +79,7 @@ server.post("/", function(req, res){
                     VALUES ($1, $2, $3)`
 
     const values = [name, email, blood]
-    db.query(query, values, function(err, ){
+    connection.query( query, values, function(err, ){
 
         if (err) return res.send("Erro no Banco de dados")
 
