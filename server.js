@@ -31,36 +31,18 @@ nunjucks.configure("./", {
     noCache: true
 })
 
-server.get( '/create', ( req, res ) => {
-
-    db.query( `CREATE TABLE IF NOT EXISTS donors(
-        ID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(45),
-        email VARCHAR(60),
-        blood VARCHAR(45)
-    )`,
-    (err, result) => {
-        // if (err) return res.send("Erro de banco de dados parte 1");
-        console.log('result: ' + result)
+server.get("/", function(req, res) {
+    db.query("SELECT * FROM donors", function(err, result){
+        if (err) return res.send("Erro de banco de dados parte 1");
 
         logger.warn('Banco de dados error'); 
         const donors = result.rows;
-        return res.render("index.html")
+        return res.render("index.html", { donors })
     })
-})
 
-server.get("/", function(req, res) {
-    // db.query("SELECT * FROM donors", function(err, result){
-    //     if (err) return res.send("Erro de banco de dados parte 1");
+    donors = []
 
-    //     logger.warn('Banco de dados error'); 
-    //     const donors = result.rows;
-    //     return res.render("index.html", { donors })
-    // })
-
-    // donors = []
-
-    res.render("index.html", { })
+    // res.render("index.html", { })
     
 })
 
