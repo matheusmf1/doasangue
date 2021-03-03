@@ -56,7 +56,7 @@ server.post("/", (req, res) => {
 
     connection.query( `INSERT INTO donors ( name, email, blood ) VALUES (${name}, ${email}, ${blood});`, (err, res ) => {
 
-        if (err) return res.send("Erro no Banco de dados: " + err)
+        if (err) return res.send( `Erro no Banco de dados: ${err}`)
 
         return res.redirect("/")
 
