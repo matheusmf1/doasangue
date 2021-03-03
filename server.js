@@ -75,11 +75,7 @@ server.post("/", (req, res) => {
         res.send("Todos os campos são obrigatórios.")
     }
 
-    const query = `INSERT INTO "donors" ("name","email", "blood") 
-                    VALUES ($1, $2, $3)`
-
-    const values = [name, email, blood]
-    connection.query( query, values, function(err, ){
+    connection.query( `INSERT INTO donors ( name, email, blood) VALUES ( ${name}, ${email}, ${blood})`, function(err, ) {
 
         if (err) return res.send("Erro no Banco de dados")
 
