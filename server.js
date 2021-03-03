@@ -56,9 +56,11 @@ server.get( "/", function(req, res) {
         if (err) return res.send("Erro de banco de dados parte 1: " + err );
 
         console.log( 'result' )
-        console.log( result )
+        console.log( result[0] )
 
         console.log( typeof result )
+
+
         
 
         const donors = result.rows;
