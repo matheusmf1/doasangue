@@ -17,7 +17,7 @@ const Pool = require('pg').Pool
 const db = new Pool({
     user: 'admin',
     password: 'admin1234',
-    host: 'demords-instance.czs5dtq7qb7g.us-east-1.rds.amazonaws.com',
+    host: 'rdsdemo.czs5dtq7qb7g.us-east-1.rds.amazonaws.com',
     port: 3306,
     database: 'doasangue'
 })
