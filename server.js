@@ -51,7 +51,7 @@ server.post("/", (req, res) => {
 
     console.log(  )
 
-    if ( name || email || blood || name == "" || email == "" || blood == ""){
+    if ( name == "" || email == "" || blood == ""){
 	// logger.warn('Todos os campos sao obrigatorios');    
     // res.send("Todos os campos são obrigatórios.")
         return res.redirect("/")
