@@ -49,9 +49,12 @@ server.post("/", (req, res) => {
     const email = req.body.email
     const blood = req.body.blood
 
-    if (name == "" || email == "" || blood == ""){
+    console.log(  )
+
+    if ( name || email || blood || name == "" || email == "" || blood == ""){
 	// logger.warn('Todos os campos sao obrigatorios');    
-        res.send("Todos os campos são obrigatórios.")
+    // res.send("Todos os campos são obrigatórios.")
+        return res.redirect("/")
     }
 
     connection.query( `INSERT INTO donors ( name, email, blood ) VALUES ("${name}", "${email}", "${blood}");`, (err, result ) => {
